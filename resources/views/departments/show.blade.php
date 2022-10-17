@@ -25,6 +25,16 @@
     </ul>
   </div>
 </div>
+<div class="container">
+  <a href="{{ route('departments.edit',$department) }}">Modifica dipartimento</a>
+
+  <form action="{{ route('departments.destroy',$department) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    
+    <input type="submit" value="Elimina">
+  </form>
+</div>
 </section>
 
 <section>

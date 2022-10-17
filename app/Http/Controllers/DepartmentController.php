@@ -37,18 +37,17 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $params = $request->all();
-        // dd($request->all());
-        // $d = new Department();
-        // $d->fill($params);
-        // // $d->name = $params['name'];
-        // // $d->phone = $params['phone'];
-        // // $d->address = $params['address'];
-        // // $d->head_of_department = $params['head_of_department'];
-        // // $d->website = $params['website'];
-        // // $d->email = $params['email'];
+        // $params = $request->all();
+        $params = $request->validate([
+            'name' => 'required|max:255',
+            'address' => ['required', 'max:255'],
+            'email' => 'required|max:255|email',
+            'website' => 'required|max:255|url',
+            'head_of_department' => 'required|max:255',
+            'phone' => 'nullable|max:255'
+        ]);
+        // validare i dati che arrivano nella request
 
-        // $d->save();
         $d = Department::create($params);
 
         return redirect()->route('departments.show', $d);
@@ -60,9 +59,9 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Department $department)
     {
-        $department = Department::findOrFail($id);
+        // $department = Department::findOrFail($id);
 
         return view('departments.show', compact('department'));
     }
@@ -75,7 +74,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $department = Department::findOrFail($id);
+
+        return view('departments.edit', compact('department'));
     }
 
     /**
@@ -85,19 +86,38 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Department $department)
     {
-        //
+        // $department = Department::findOrFail($id);
+
+        $params = $request->validate([
+            'name' => 'required|max:255',
+            'address' => ['required', 'max:255'],
+            'email' => 'required|max:255|email',
+            'website' => 'required|max:255|url',
+            'head_of_department' => 'required|max:255',
+            'phone' => 'nullable|max:255'
+        ]);
+
+        $department->update($params);
+
+        return redirect()->route('departments.show', $department);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Department $department)
     {
-        //
+        // $department = Department::findOrFail($id);
+
+        $department->delete();
+
+        // Department::destroy($id);
+
+        return redirect()->route('departments.index');
     }
 }
