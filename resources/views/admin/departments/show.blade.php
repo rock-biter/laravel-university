@@ -26,9 +26,9 @@
   </div>
 </div>
 <div class="container">
-  <a href="{{ route('departments.edit',$department) }}">Modifica dipartimento</a>
+  <a href="{{ route('admin.departments.edit',$department) }}">Modifica dipartimento</a>
 
-  <form action="{{ route('departments.destroy',$department) }}" method="POST">
+  <form action="{{ route('admin.departments.destroy',$department) }}" method="POST">
     @csrf
     @method('DELETE')
     
