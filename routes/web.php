@@ -18,5 +18,3 @@ Route::get('/', function () {
 })->name('homepage');
 
 Route::resource('departments', 'DepartmentController');
-
-Route::resource('users', 'UserController');
