@@ -30,5 +30,8 @@ Route::middleware('auth')
 
         Route::get('/home', 'HomeController@index')->name('home');
 
-        Route::resource('departments', 'DepartmentController');
+        Route::resources([
+            'departments' => 'DepartmentController',
+            'courses' => 'CourseController'
+        ]);
     });
