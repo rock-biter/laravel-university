@@ -10,7 +10,7 @@
   </div>
 
   <div class="container">
-    <form action="{{ route('departments.store') }}" method="POST">
+    <form action="{{ route('admin.departments.store') }}" method="POST">
 
       @csrf 
 

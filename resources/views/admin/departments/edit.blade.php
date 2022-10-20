@@ -10,7 +10,7 @@
   </div>
 
   <div class="container">
-    <form action="{{ route('departments.update',$department) }}" method="POST">
+    <form action="{{ route('admin.departments.update',$department) }}" method="POST">
 
       @csrf 
       @method('PUT')

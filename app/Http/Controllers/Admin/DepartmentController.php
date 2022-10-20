@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Department;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -16,7 +17,7 @@ class DepartmentController extends Controller
     {
         $departments = Department::all();
 
-        return view('departments.index', compact('departments'));
+        return view('admin.departments.index', compact('departments'));
     }
 
     /**
@@ -26,7 +27,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('departments.create');
+        return view('admin.departments.create');
     }
 
     /**
@@ -50,7 +51,7 @@ class DepartmentController extends Controller
 
         $d = Department::create($params);
 
-        return redirect()->route('departments.show', $d);
+        return redirect()->route('admin.departments.show', $d);
     }
 
     /**
@@ -63,7 +64,7 @@ class DepartmentController extends Controller
     {
         // $department = Department::findOrFail($id);
 
-        return view('departments.show', compact('department'));
+        return view('admin.departments.show', compact('department'));
     }
 
     /**
@@ -76,7 +77,7 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
 
-        return view('departments.edit', compact('department'));
+        return view('admin.departments.edit', compact('department'));
     }
 
     /**
@@ -101,7 +102,7 @@ class DepartmentController extends Controller
 
         $department->update($params);
 
-        return redirect()->route('departments.show', $department);
+        return redirect()->route('admin.departments.show', $department);
     }
 
     /**
@@ -118,6 +119,6 @@ class DepartmentController extends Controller
 
         // Department::destroy($id);
 
-        return redirect()->route('departments.index');
+        return redirect()->route('admin.departments.index');
     }
 }
