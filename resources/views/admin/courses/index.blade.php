@@ -23,7 +23,7 @@
                 <a href="{{ route('admin.courses.index',['orderBy' => 'name', 'order' => Request::get('order') === 'asc' ? 'desc' : 'asc']) }}" class="d-flex align-items-center">
 
                   Nome
-                  <div class="order-icon @if(Request::get('order') === 'desc') order-desc @else order-asc @endif ml-3">
+                  <div class="order-icon @if(Request::get('orderBy') === 'name') d-block @else d-none @endif @if(Request::get('order') === 'desc') order-desc @else order-asc @endif ml-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
@@ -34,7 +34,7 @@
                 <a href="{{ route('admin.courses.index',['orderBy' => 'period']) }}" class="d-flex align-items-center">
 
                   Periodo
-                  <div class="order-icon ml-3">
+                  <div class="order-icon @if(Request::get('orderBy') === 'period') d-block @else d-none @endif @if(Request::get('order') === 'desc') order-desc @else order-asc @endif ml-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
@@ -45,7 +45,7 @@
                 <a href="{{ route('admin.courses.index',['orderBy' => 'year']) }}" class="d-flex align-items-center">
 
                   Anno
-                  <div class="order-icon ml-3">
+                  <div class="order-icon @if(Request::get('orderBy') === 'year') d-block @else d-none @endif ml-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
@@ -56,7 +56,7 @@
                 <a href="{{ route('admin.courses.index',['orderBy' => 'cfu']) }}" class="d-flex align-items-center">
 
                   CFU
-                  <div class="order-icon ml-3">
+                  <div class="order-icon @if(Request::get('orderBy') === 'cfu') d-block @else d-none @endif ml-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
