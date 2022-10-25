@@ -15,18 +15,45 @@
           </a>
         </h2>
         <h4>Docenti:</h4>
-        <ul>
-          <li>nessun docente per questo corso</li>
-        </ul>
+        <ol>
+          @forelse ($course->teachers()->orderBy('surname','asc')->get() as $teacher)
+              <li>
+                {{ $teacher->name }} {{ $teacher->surname }} <br>
+                <small>{{$teacher->email}}</small>
+              </li>
+          @empty
+            <li>nessun docente per questo corso</li>
+          @endforelse
+        </ol>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">
         <a href="{{ route('admin.courses.edit',$course) }}">Modifica corso</a>
 
-        <form class="ml-2" action="{{ route('admin.courses.destroy',$course) }}" method="POST">
+        <form id="delete-course" class="ml-2" action="{{ route('admin.courses.destroy',$course) }}" method="POST">
           @csrf
           @method('DELETE')
           
-          <input type="submit" value="Elimina">
+          <input for="delete-course" type="submit" value="Elimina">
+        </form>
+        <form id="attach-teacher" action="{{ route('admin.courses.attach.teacher',$course) }}" method="POST">
+          @csrf
+
+          <div class="form-group">
+            <select name="teacher_id" value="{{ old('teacher_id') }}" class="custom-select @error('teacher_id')is-invalid @enderror">
+              <option value="">-- seleziona un insegnante da aggiungere --</option>
+              @foreach($teachers as $teacher)
+                <option   value="{{ $teacher->id }}" @if( old('teacher_id') == $teacher->id ) selected @endif>{{ $teacher->surname }} {{ $teacher->name }}</option>
+              @endforeach
+
+            </select>
+            @error('teacher_id')
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+
+          <input for="attach-teacher" type="submit" value="aggiungi insegnante">
         </form>
       </div>
       <div class="col-12">

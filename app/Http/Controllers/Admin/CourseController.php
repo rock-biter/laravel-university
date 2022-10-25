@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Course;
 use App\Degree;
 use App\Http\Controllers\Controller;
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -78,7 +79,10 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('admin.courses.show', compact('course'));
+        $attachedTeacherIds = $course->teachers->pluck('id')->all();
+        // dd($attachedTeacherIds);
+        $teachers = Teacher::whereNotIn('id', $attachedTeacherIds)->orderBy('surname', 'asc')->get();
+        return view('admin.courses.show', compact('course', 'teachers'));
     }
 
     /**
@@ -127,5 +131,23 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('admin.courses.index');
+    }
+
+
+    public function attachTeacher(Request $request, Course $course)
+    {
+        $params = $request->validate([
+            'teacher_id' => [
+                'nullable',
+                'exists:teachers,id',
+                Rule::notIn($course->teachers->pluck('id')->all())
+            ]
+        ]);
+
+        if (array_key_exists('teacher_id', $params)) {
+            $course->teachers()->attach($params['teacher_id']);
+        }
+
+        return redirect()->route('admin.courses.show', $course);
     }
 }

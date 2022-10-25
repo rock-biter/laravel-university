@@ -34,4 +34,6 @@ Route::middleware('auth')
             'departments' => 'DepartmentController',
             'courses' => 'CourseController'
         ]);
+
+        Route::post('/courses/{course}/teachers', 'CourseController@attachTeacher')->name('courses.attach.teacher');
     });

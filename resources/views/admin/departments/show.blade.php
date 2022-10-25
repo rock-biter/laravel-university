@@ -22,6 +22,11 @@
       <li>
         <span>Sito web:</span> {{ $department->website }}
       </li>
+      <li>
+        {{-- <span>Creato il:</span> {{ Carbon\Carbon::parse($department->created_at)->format('d/m/Y') }} --}}
+        {{-- @dump($department->updated_at) --}}
+        <span>Creato il:</span> {{ $department->created_at->locale('it_IT')->diffForHumans(['parts' => 1]) }}
+      </li>
     </ul>
   </div>
 </div>
