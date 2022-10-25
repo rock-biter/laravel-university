@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Course;
+use App\Degree;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -40,7 +41,10 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.courses.create');
+        $degrees = Degree::orderBy('name', 'asc')->get();
+        $available_cfu = Course::AVAILABLE_CFU;
+        // dd($degrees);
+        return view('admin.courses.create', compact('degrees', 'available_cfu'));
     }
 
     /**
@@ -57,7 +61,8 @@ class CourseController extends Controller
             'period' => ['required', Rule::in(['I semestre', 'II semestre', 'Annuale'])],
             'year' => ['required', 'numeric', Rule::in([1, 2, 3, 4, 5, 6])],
             'cfu' => 'required|numeric|min:1|max:50',
-            'website' => 'url|nullable'
+            'website' => 'url|nullable',
+            'degree_id' => 'required|exists:degrees,id'
         ]);
 
         $course = Course::create($params);
@@ -102,7 +107,8 @@ class CourseController extends Controller
             'period' => ['required', Rule::in(['I semestre', 'II semestre', 'Annuale'])],
             'year' => ['required', 'numeric', Rule::in([1, 2, 3, 4, 5, 6])],
             'cfu' => 'required|numeric|min:1|max:50',
-            'website' => 'url|nullable'
+            'website' => 'url|nullable',
+            'degree_id' => 'required|exists:degrees,id'
         ]);
 
         $course->update($params);

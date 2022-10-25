@@ -65,10 +65,28 @@
           </div>
 
           <div class="form-group">
+            <label for="degree_id">Corso di Laurea</label>
+            <select name="degree_id" value="{{ old('degree_id') }}" class="custom-select @error('degree_id')is-invalid @enderror">
+              <option value="">-- seleziona corso di laurea --</option>
+              @foreach($degrees as $degree)
+                <option   value="{{ $degree->id }}" @if( old('degree_id') == $degree->id ) selected @endif>{{ $degree->name }}</option>
+              @endforeach
+            </select>
+            <div class="invalid-feedback">Seleziona di corso di Laurea di questo corso</div>
+            @error('degree_id')
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+
+          <div class="form-group">
             <label for="cfu">Crediti formativi (CFU)</label>
             <select name="cfu" value="{{ old('cfu') }}" class="custom-select @error('cfu')is-invalid @enderror">
-              <option value="1">1</option>
-              <option value="2">2</option>
+              @foreach($available_cfu as $cfu)
+                <option @if(old('cfu') == $cfu) selected @endif value="{{ $cfu }}">{{ $cfu }}</option>
+              @endforeach
+              {{-- <option value="2">2</option>
               <option selected value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
@@ -80,7 +98,7 @@
               <option value="11">11</option>
               <option value="12">12</option>
               <option value="20">20</option>
-              <option value="30">30</option>
+              <option value="30">30</option> --}}
             </select>
             <div class="invalid-feedback">ESelezione il numero di crediti di questo corso</div>
             @error('cfu')
