@@ -17,4 +17,9 @@ class Course extends Model
     {
         return $this->belongsTo('App\Degree');
     }
+
+    public function teachers()
+    {
+        return $this->belongsToMany('App\Teacher');
+    }
 }
