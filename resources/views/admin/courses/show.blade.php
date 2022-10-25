@@ -8,6 +8,12 @@
     <div class="row">
       <div class="col-8">
         <h1>{{ $course->name}}</h1>
+        <h2>Corso di laurea: {{ $course->degree->name }} <br>
+          Dipartimento:  
+          <a href="{{ route('admin.departments.show',$course->degree->department) }}">
+          {{ $course->degree->department->name }}
+          </a>
+        </h2>
         <h4>Docenti:</h4>
         <ul>
           <li>nessun docente per questo corso</li>
